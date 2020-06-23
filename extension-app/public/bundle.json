@@ -1,0 +1,14 @@
+{
+  "applications": [
+    {
+      "type": "sandbox",
+      "id": "fxapp",
+      "name": "symphony-training-fx-app",
+      "blurb": "This is template integration app, using React Lib!",
+      "publisher": "MyBank",
+      "url": "https://localhost:4000/controller.html",
+      "domain": "localhost",
+      "iconUrl": "https://localhost:4000/assets/favicon.png"
+    }
+  ]
+}

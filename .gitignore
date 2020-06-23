@@ -1,0 +1,13 @@
+coverage
+.vscode
+.DS_Store
+.idea
+npm-debug.log
+node_modules
+test-report.xml
+yarn.lock
+package-lock.json
+
+# Whitelist
+dist/*
+!dist/bundle.json
