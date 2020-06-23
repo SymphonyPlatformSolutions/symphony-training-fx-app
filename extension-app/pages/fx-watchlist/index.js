@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import {
-    Text, Card, Box, Button, DecisionDropdown, Table, CandleStickChart
+    Text, Card, Box, Button, DecisionDropdown, Table, CandleStickChart, Loader
 } from 'symphony-bdk-ui-toolkit';
 
 const FxWatchlist = () => {
@@ -17,17 +17,20 @@ const FxWatchlist = () => {
 
     const handleChart = (item) => {
         const { base, currency } = item.row.original;
-        setChartData({
-            loading: false,
-            title: 'My Chart',
-            data: [
-                { date: new Date('2020-01-01'), open: 1, high: 10, low: 1, close: 4 },
-                { date: new Date('2020-01-02'), open: 2, high: 12, low: 3, close: 7 },
-                { date: new Date('2020-01-03'), open: 3, high: 16, low: 5, close: 13 },
-                { date: new Date('2020-01-04'), open: 4, high: 17, low: 7, close: 14 },
-                { date: new Date('2020-01-05'), open: 5, high: 21, low: 9, close: 17 }
-            ]
-        });
+        const apiUrl = `http://localhost:8080/fxbot/fx-rate/${base}/${currency}`;
+
+        setChartData({ loading: true });
+
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(json => {
+                const formattedData = json.map(entry => ({ ...entry, date: new Date(entry.date) }));
+                setChartData({
+                    loading: false,
+                    title: `${base}/${currency}`,
+                    data: formattedData
+                });
+            });
     };
 
     const actionsMenu = [
@@ -74,7 +77,7 @@ const FxWatchlist = () => {
     ];
 
     const priceChart = (
-        <Box style={{ width: '100%', height: '500px' }}>
+        <Box style={{ width: '100%', height: '500px', marginTop: '50px' }}>
             <CandleStickChart
                 tickSizeX={10}
                 loading={chartData.loading}
@@ -101,7 +104,7 @@ const FxWatchlist = () => {
                 </Box>
             </Card>
             <Table columns={tableColumns} data={watchlistData} />
-            { chartData.data && priceChart }
+            { chartData.loading ? <Loader size="large" /> : chartData.data && priceChart }
         </React.Fragment>
     );
 };
