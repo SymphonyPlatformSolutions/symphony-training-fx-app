@@ -52,12 +52,6 @@ const bootstrap = () => {
   );
   extendedUserInfoService.getJwt().then((jwt) => {
     RestClient.setJwt(jwt);
-    RestClient.get('/v1/sym/rooms').then((response) => {
-      window.botRooms = response.data;
-    });
-    RestClient.get('/v1/sym/bot-info').then((response) => {
-      window.botUsername = response.data.username;
-    });
   });
   const enricher = new GeneralEnricher(`${APP_ID}:enricher`);
   enricher.init();

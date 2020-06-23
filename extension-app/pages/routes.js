@@ -106,6 +106,7 @@ const Routes = (props) => {
   const Default = () => <Redirect to={`${LINK_PREFIX}/app.html`} />;
 
   if (jwt) {
+    /*
     if (jwt === 'loading') {
       return (
         <ThemeProvider theme={currentTheme}>
@@ -115,6 +116,7 @@ const Routes = (props) => {
         </ThemeProvider>
       );
     }
+    */
 
     return (
       <ContainerWrapper>

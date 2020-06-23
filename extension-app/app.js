@@ -29,25 +29,6 @@ handleOutline(); // Accessibility
 let MOCK_USER_SERVICE = null;
 
 const appWrapper = async () => {
-  // These next lines will be removed on production
-  /* develblock:start */
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
-  MOCK_USER_SERVICE = {
-    getJwt: () => new Promise(Resolve => Resolve('NO JWT')),
-  };
-  for (let i = 0; i < 10; i++) {
-    console.log('Waiting for Symphony Mock...', i);
-    if (window.SYMPHONY.remote.isMock) {
-      console.log('Appjs Found it!');
-      break;
-    }
-    await sleep(15);
-  }
-  console.log('APPJS GOT', window.SYMPHONY);
-  /* develblock:end */
-
   const appService = SYMPHONY.services.register(`${APP_ID}:app`);
 
   SYMPHONY.remote.hello().then((data) => {
